@@ -1,0 +1,62 @@
+{
+  "name": "yougottalovefrontend-sergeylukin",
+  "version": "0.0.1",
+  "description": "My submission for You Gotta Love Front End conference challenge",
+  "private": true,
+  "author": "Sergey Lukin <contact@sergeylukin.com>",
+  "homepage": "https://github.com/sergeylukin/yougottalovefrontend",
+  "browser": {
+    "modernizr": "./app/assets/javascripts/modernizr-custom.js",
+    "skrollr": "./app/_bower_components/skrollr/src/skrollr.js",
+    "pace": "./app/_bower_components/pace/pace.js",
+    "snap": "./app/_bower_components/Snap.svg/dist/snap.svg.js",
+    "picturefill": "./app/_bower_components/picturefill/dist/picturefill.js"
+  },
+  "browserify-shim": {
+    "modernizr": "Modernizr",
+    "skrollr": "skrollr",
+    "pace": "Pace",
+    "snap": "Snap",
+    "picturefill": "picturefill"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "devDependencies": {
+    "browser-sync": "^2.29.3",
+    "browserify": "^17.0.0",
+    "browserify-shim": "^3.8.16",
+    "del": "^7.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-changed": "^4.0.3",
+    "gulp-filter": "^8.0.0",
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-imagemin": "^8.0.0",
+    "gulp-inline-source": "^4.0.0",
+    "gulp-jshint": "^2.1.0",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-modernizr": "^4.0.4",
+    "gulp-notify": "^4.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rev": "^10.0.0",
+    "gulp-rev-collector": "^1.3.3",
+    "gulp-sass": "^5.1.0",
+    "gulp-size": "^4.0.1",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-util": "^3.0.1",
+    "jshint-stylish": "^2.2.1",
+    "npm-check-updates": "^16.10.17",
+    "pretty-hrtime": "^1.0.3",
+    "require-dir": "^1.2.0",
+    "run-sequence": "^2.2.1",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify": "^4.0.0"
+  },
+  "volta": {
+    "node": "18.17.0"
+  }
+}
