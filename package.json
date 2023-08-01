@@ -5,25 +5,6 @@
   "private": true,
   "author": "Sergey Lukin <contact@sergeylukin.com>",
   "homepage": "https://github.com/sergeylukin/yougottalovefrontend",
-  "browser": {
-    "modernizr": "./app/assets/javascripts/modernizr-custom.js",
-    "skrollr": "./app/_bower_components/skrollr/src/skrollr.js",
-    "pace": "./app/_bower_components/pace/pace.js",
-    "snap": "./app/_bower_components/Snap.svg/dist/snap.svg.js",
-    "picturefill": "./app/_bower_components/picturefill/dist/picturefill.js"
-  },
-  "browserify-shim": {
-    "modernizr": "Modernizr",
-    "skrollr": "skrollr",
-    "pace": "Pace",
-    "snap": "Snap",
-    "picturefill": "picturefill"
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
   "devDependencies": {
     "browser-sync": "^2.29.3",
     "browserify": "^17.0.0",
@@ -58,5 +39,9 @@
   },
   "volta": {
     "node": "18.17.0"
+  },
+  "dependencies": {
+    "skrollr": "^0.6.26",
+    "snapsvg": "^0.5.1"
   }
 }

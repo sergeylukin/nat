@@ -4,1264 +4,755 @@
     <meta charset="utf-8" />
     <title>Important notification from NASA</title>
     <meta name="viewport" content="width=device-width" />
-    <script>
-      !(function e(t, n, r) {
-        function o(i, a) {
-          if (!n[i]) {
-            if (!t[i]) {
-              var u = "function" == typeof require && require;
-              if (!a && u) return u(i, !0);
-              if (s) return s(i, !0);
-              var c = new Error("Cannot find module '" + i + "'");
-              throw ((c.code = "MODULE_NOT_FOUND"), c);
-            }
-            var l = (n[i] = { exports: {} });
-            t[i][0].call(
-              l.exports,
-              function (e) {
-                var n = t[i][1][e];
-                return o(n ? n : e);
-              },
-              l,
-              l.exports,
-              e,
-              t,
-              n,
-              r
-            );
-          }
-          return n[i].exports;
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Source+Sans+Pro:wght@400;700&display=swap");
+      * {
+        box-sizing: border-box;
+      }
+
+      .sr-only {
+        visibility: hidden;
+      }
+
+      .hidden {
+        width: 0;
+        height: 0;
+        visibility: hidden;
+        display: none;
+        overflow: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Source Code Pro", monospace;
+      }
+
+      html {
+        font-size: 16px;
+      }
+
+      body {
+        display: flex;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+        flex-direction: column;
+        min-height: 100vh;
+        font-family: "Source Sans Pro", sans-serif;
+        position: relative;
+        background-color: #181a1b;
+      }
+
+#YGLF-intro svg {
+left:0;
+}
+
+      .challenge-title {
+        text-align: center;
+        padding: 0;
+        margin: 1rem 0 0.5rem;
+        color: #788287;
+        font-size: 2rem;
+        font-weight: bold;
+        position: relative;
+        z-index: 2;
+        transition: color 0.3s ease-in-out;
+      }
+      .challenge-title.init {
+        color: #484e51;
+      }
+
+      .challenge-subtitle {
+        text-align: center;
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 400;
+        color: #484e51;
+        position: relative;
+        z-index: 2;
+        transition: color 0.3s ease-in-out;
+      }
+      .challenge-subtitle.init {
+        color: #303436;
+      }
+
+      .challenge-part-of {
+        text-align: center;
+        margin: 1rem 0 0;
+        font-size: 0.875rem;
+        color: #484e51;
+        position: fixed;
+        z-index: 2;
+        bottom: 1rem;
+        right: 1rem;
+        transition: right 0.3s ease-in-out;
+        font-weight: bold;
+      }
+      .challenge-part-of.init {
+        right: 92px;
+      }
+      .challenge-part-of a,
+      .challenge-part-of a:visited {
+        color: #484e51;
+        -webkit-text-decoration-style: wavy;
+        text-decoration-style: wavy;
+      }
+      .challenge-part-of a:hover,
+      .challenge-part-of a:active,
+      .challenge-part-of a:visited:hover,
+      .challenge-part-of a:visited:active {
+        color: #60686c;
+      }
+
+      .glitch-container {
+        position: relative;
+      }
+      .glitch-container .svg-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .glitch-container .svg-container:nth-of-type(1) {
+        left: 2px;
+        background-color: #181a1b;
+        display: none;
+      }
+      .glitch-container .svg-container:nth-of-type(1) svg {
+        filter: drop-shadow(-2px 0 2px #ff0000);
+      }
+      .glitch-container .svg-container:nth-of-type(3) {
+        left: -2px;
+        background-color: #181a1b;
+        display: none;
+      }
+      .glitch-container .svg-container:nth-of-type(3) svg {
+        filter: drop-shadow(2px 0 2px #0000ff);
+      }
+      .glitch-container.glitch-hover:hover .svg-container:nth-of-type(1) {
+        display: block;
+        animation: glitchAnimationRed 2s ease infinite alternate-reverse;
+      }
+      .glitch-container.glitch-hover:hover .svg-container:nth-of-type(3) {
+        display: block;
+        animation: glitchAnimationBlue 3s ease infinite alternate-reverse;
+      }
+      .glitch-container.animated .svg-container:nth-of-type(1) {
+        display: block;
+        animation: glitchAnimationRed 2s ease alternate-reverse;
+      }
+      .glitch-container.animated .svg-container:nth-of-type(3) {
+        display: block;
+        animation: glitchAnimationBlue 3s ease alternate-reverse;
+      }
+
+      .welcome-to-scrpttag {
+        transform: scaleX(0) scaleY(0);
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+        background-color: #181a1b;
+        z-index: 1;
+        display: flex;
+        align-items: stretch;
+      }
+      .welcome-to-scrpttag.init {
+        pointer-events: initial;
+        -webkit-animation: init 0.8s ease-in-out forwards;
+        animation: init 0.8s ease-in-out forwards;
+      }
+      .welcome-to-scrpttag .main-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 100%;
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid #3c4144;
+      }
+      .welcome-to-scrpttag .main-header .logo {
+        align-self: center;
+        margin-top: 0.875rem;
+      }
+      .welcome-to-scrpttag .main-header .glitch-container {
+        width: 42px;
+        height: 42px;
+      }
+      .welcome-to-scrpttag .main-header .glitch-container .svg-container svg {
+        fill: #f5f6f7;
+      }
+      .welcome-to-scrpttag .main-header nav {
+        margin: auto 0;
+      }
+      .welcome-to-scrpttag .main-header nav ul {
+        display: flex;
+        flex-direction: column;
+      }
+      .welcome-to-scrpttag .main-header nav ul li a,
+      .welcome-to-scrpttag .main-header nav ul li a:visited {
+        display: block;
+        padding: 0.5rem;
+        text-decoration: none;
+        font-weight: normal;
+        transition: color 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        color: #f5f6f7;
+      }
+      .welcome-to-scrpttag .main-header nav ul li a:hover,
+      .welcome-to-scrpttag .main-header nav ul li a:active,
+      .welcome-to-scrpttag .main-header nav ul li a:visited:hover,
+      .welcome-to-scrpttag .main-header nav ul li a:visited:active {
+        color: #cbd0d5;
+      }
+      .welcome-to-scrpttag .main-content {
+        flex: 1;
+        margin: 0 92px 0 217px;
+        padding: 1rem 0;
+      }
+      .welcome-to-scrpttag .main-content .thank-you {
+        width: 700px;
+        padding: 0.875rem 1rem;
+        color: #f5f6f7;
+      }
+      .welcome-to-scrpttag .main-content .thank-you h3 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        line-height: 1.25;
+      }
+      .welcome-to-scrpttag .main-content .thank-you h4 {
+        font-size: 1.25rem;
+        margin: 1rem 0;
+      }
+      .welcome-to-scrpttag .main-content .thank-you p {
+        margin-bottom: 0.5rem;
+        line-height: 1.5;
+      }
+      .welcome-to-scrpttag .main-content .thank-you p strong {
+        font-weight: bold;
+      }
+      .welcome-to-scrpttag .main-content .thank-you p em {
+        font-style: italic;
+      }
+      .welcome-to-scrpttag .main-content .thank-you .svg-container {
+        width: 100px;
+        height: 50px;
+        margin-top: 1rem;
+      }
+      .welcome-to-scrpttag .main-content .thank-you .svg-container svg {
+        fill: #f5f6f7;
+      }
+      .welcome-to-scrpttag .main-footer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 75px;
+        height: 100%;
+        padding: 0.875rem;
+        border-left: 1px solid #3c4144;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+      .welcome-to-scrpttag .main-footer ul {
+        height: 100%;
+        -ms-writing-mode: tb;
+        writing-mode: tb;
+        display: flex;
+        align-items: center;
+        text-transform: uppercase;
+        margin: -1rem 0;
+      }
+      .welcome-to-scrpttag .main-footer ul li {
+        padding: 1rem 0;
+        font-size: 0.875rem;
+        color: #484e51;
+        font-weight: bold;
+      }
+      .welcome-to-scrpttag .main-footer ul li:last-of-type {
+        margin-top: auto;
+        padding: 0;
+      }
+      .welcome-to-scrpttag .main-footer ul li a,
+      .welcome-to-scrpttag .main-footer ul li a:visited {
+        text-decoration: none;
+        transition: color 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        color: #484e51;
+      }
+      .welcome-to-scrpttag .main-footer ul li a:hover,
+      .welcome-to-scrpttag .main-footer ul li a:active,
+      .welcome-to-scrpttag .main-footer ul li a:visited:hover,
+      .welcome-to-scrpttag .main-footer ul li a:visited:active {
+        color: #60686c;
+      }
+
+      .console {
+        width: 700px;
+        min-height: 350px;
+        background-color: black;
+        margin: 2rem 0;
+        padding: 0.5rem;
+        font-family: "Source Code Pro", monospace;
+      }
+      .console .line {
+        color: #70e000;
+        padding: 0.5rem 0 0.5rem 1rem;
+      }
+      .console .line.cl-loading {
+        line-height: 1.5;
+      }
+      .console .line.cl-loading.error {
+        color: red;
+      }
+      .console .line.line-prompt {
+        padding-left: 2rem;
+        position: relative;
+      }
+      .console .line.line-prompt::before {
+        content: "$";
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .console .line.line-prompt[contenteditable]:focus {
+        outline: 0;
+      }
+
+      @-webkit-keyframes glitchAnimationRed {
+        0% {
+          -webkit-clip-path: inset(79% 0 14% 0);
+          clip-path: inset(79% 0 14% 0);
         }
-        for (
-          var s = "function" == typeof require && require, i = 0;
-          i < r.length;
-          i++
-        )
-          o(r[i]);
-        return o;
-      })(
-        {
-          1: [
-            function (e, t, n) {
-              e("modernizr"),
-                e("pace"),
-                (window.onbeforeunload = function () {
-                  window.scrollTo(0, 0);
-                });
-            },
-            { modernizr: 3, pace: 2 },
-          ],
-          2: [
-            function (e, t, n) {
-              (function (e) {
-                (function (e, t, n, r, o) {
-                  (function () {
-                    var n,
-                      o,
-                      s,
-                      i,
-                      a,
-                      u,
-                      c,
-                      l,
-                      f,
-                      p,
-                      d,
-                      h,
-                      g,
-                      m,
-                      y,
-                      v,
-                      w,
-                      b,
-                      S,
-                      q,
-                      x,
-                      T,
-                      _,
-                      k,
-                      P,
-                      L,
-                      E,
-                      N,
-                      R,
-                      j,
-                      C,
-                      O,
-                      M,
-                      A,
-                      F,
-                      U,
-                      z,
-                      B,
-                      D,
-                      W,
-                      X,
-                      H,
-                      I,
-                      G,
-                      J,
-                      V,
-                      $,
-                      K,
-                      Q,
-                      Y = [].slice,
-                      Z = {}.hasOwnProperty,
-                      ee = function (e, t) {
-                        function n() {
-                          this.constructor = e;
-                        }
-                        for (var r in t) Z.call(t, r) && (e[r] = t[r]);
-                        return (
-                          (n.prototype = t.prototype),
-                          (e.prototype = new n()),
-                          (e.__super__ = t.prototype),
-                          e
-                        );
-                      },
-                      te =
-                        [].indexOf ||
-                        function (e) {
-                          for (var t = 0, n = this.length; n > t; t++)
-                            if (t in this && this[t] === e) return t;
-                          return -1;
-                        };
-                    for (
-                      x = {
-                        catchupTime: 100,
-                        initialRate: 0.03,
-                        minTime: 250,
-                        ghostTime: 100,
-                        maxProgressPerFrame: 20,
-                        easeFactor: 1.25,
-                        startOnPageLoad: !0,
-                        restartOnPushState: !0,
-                        restartOnRequestAfter: 500,
-                        target: "body",
-                        elements: { checkInterval: 100, selectors: ["body"] },
-                        eventLag: {
-                          minSamples: 10,
-                          sampleCount: 3,
-                          lagThreshold: 3,
-                        },
-                        ajax: {
-                          trackMethods: ["GET"],
-                          trackWebSockets: !0,
-                          ignoreURLs: [],
-                        },
-                      },
-                        R = function () {
-                          var e;
-                          return null !=
-                            (e =
-                              "undefined" != typeof performance &&
-                              null !== performance &&
-                              "function" == typeof performance.now
-                                ? performance.now()
-                                : void 0)
-                            ? e
-                            : +new Date();
-                        },
-                        C =
-                          window.requestAnimationFrame ||
-                          window.mozRequestAnimationFrame ||
-                          window.webkitRequestAnimationFrame ||
-                          window.msRequestAnimationFrame,
-                        q =
-                          window.cancelAnimationFrame ||
-                          window.mozCancelAnimationFrame,
-                        null == C &&
-                          ((C = function (e) {
-                            return setTimeout(e, 50);
-                          }),
-                          (q = function (e) {
-                            return clearTimeout(e);
-                          })),
-                        M = function (e) {
-                          var t, n;
-                          return (
-                            (t = R()),
-                            (n = function () {
-                              var r;
-                              return (
-                                (r = R() - t),
-                                r >= 33
-                                  ? ((t = R()),
-                                    e(r, function () {
-                                      return C(n);
-                                    }))
-                                  : setTimeout(n, 33 - r)
-                              );
-                            })()
-                          );
-                        },
-                        O = function () {
-                          var e, t, n;
-                          return (
-                            (n = arguments[0]),
-                            (t = arguments[1]),
-                            (e =
-                              3 <= arguments.length
-                                ? Y.call(arguments, 2)
-                                : []),
-                            "function" == typeof n[t] ? n[t].apply(n, e) : n[t]
-                          );
-                        },
-                        T = function () {
-                          var e, t, n, r, o, s, i;
-                          for (
-                            t = arguments[0],
-                              r =
-                                2 <= arguments.length
-                                  ? Y.call(arguments, 1)
-                                  : [],
-                              s = 0,
-                              i = r.length;
-                            i > s;
-                            s++
-                          )
-                            if ((n = r[s]))
-                              for (e in n)
-                                Z.call(n, e) &&
-                                  ((o = n[e]),
-                                  null != t[e] &&
-                                  "object" == typeof t[e] &&
-                                  null != o &&
-                                  "object" == typeof o
-                                    ? T(t[e], o)
-                                    : (t[e] = o));
-                          return t;
-                        },
-                        w = function (e) {
-                          var t, n, r, o, s;
-                          for (n = t = 0, o = 0, s = e.length; s > o; o++)
-                            (r = e[o]), (n += Math.abs(r)), t++;
-                          return n / t;
-                        },
-                        k = function (e, t) {
-                          var n, r, o;
-                          if (
-                            (null == e && (e = "options"),
-                            null == t && (t = !0),
-                            (o = document.querySelector(
-                              "[data-pace-" + e + "]"
-                            )))
-                          ) {
-                            if (((n = o.getAttribute("data-pace-" + e)), !t))
-                              return n;
-                            try {
-                              return JSON.parse(n);
-                            } catch (s) {
-                              return (
-                                (r = s),
-                                "undefined" != typeof console &&
-                                null !== console
-                                  ? console.error(
-                                      "Error parsing inline pace options",
-                                      r
-                                    )
-                                  : void 0
-                              );
-                            }
-                          }
-                        },
-                        c = (function () {
-                          function e() {}
-                          return (
-                            (e.prototype.on = function (e, t, n, r) {
-                              var o;
-                              return (
-                                null == r && (r = !1),
-                                null == this.bindings && (this.bindings = {}),
-                                null == (o = this.bindings)[e] && (o[e] = []),
-                                this.bindings[e].push({
-                                  handler: t,
-                                  ctx: n,
-                                  once: r,
-                                })
-                              );
-                            }),
-                            (e.prototype.once = function (e, t, n) {
-                              return this.on(e, t, n, !0);
-                            }),
-                            (e.prototype.off = function (e, t) {
-                              var n, r, o;
-                              if (
-                                null !=
-                                (null != (r = this.bindings) ? r[e] : void 0)
-                              ) {
-                                if (null == t) return delete this.bindings[e];
-                                for (
-                                  n = 0, o = [];
-                                  n < this.bindings[e].length;
+        5.8823529412% {
+          -webkit-clip-path: inset(48% 0 2% 0);
+          clip-path: inset(48% 0 2% 0);
+        }
+        11.7647058824% {
+          -webkit-clip-path: inset(65% 0 1% 0);
+          clip-path: inset(65% 0 1% 0);
+        }
+        17.6470588235% {
+          -webkit-clip-path: inset(85% 0 16% 0);
+          clip-path: inset(85% 0 16% 0);
+        }
+        23.5294117647% {
+          -webkit-clip-path: inset(25% 0 53% 0);
+          clip-path: inset(25% 0 53% 0);
+        }
+        29.4117647059% {
+          -webkit-clip-path: inset(11% 0 5% 0);
+          clip-path: inset(11% 0 5% 0);
+        }
+        35.2941176471% {
+          -webkit-clip-path: inset(24% 0 68% 0);
+          clip-path: inset(24% 0 68% 0);
+        }
+        41.1764705882% {
+          -webkit-clip-path: inset(64% 0 11% 0);
+          clip-path: inset(64% 0 11% 0);
+        }
+        47.0588235294% {
+          -webkit-clip-path: inset(91% 0 8% 0);
+          clip-path: inset(91% 0 8% 0);
+        }
+        52.9411764706% {
+          -webkit-clip-path: inset(65% 0 27% 0);
+          clip-path: inset(65% 0 27% 0);
+        }
+        58.8235294118% {
+          -webkit-clip-path: inset(75% 0 26% 0);
+          clip-path: inset(75% 0 26% 0);
+        }
+        64.7058823529% {
+          -webkit-clip-path: inset(58% 0 12% 0);
+          clip-path: inset(58% 0 12% 0);
+        }
+        70.5882352941% {
+          -webkit-clip-path: inset(85% 0 6% 0);
+          clip-path: inset(85% 0 6% 0);
+        }
+        76.4705882353% {
+          -webkit-clip-path: inset(64% 0 22% 0);
+          clip-path: inset(64% 0 22% 0);
+        }
+        82.3529411765% {
+          -webkit-clip-path: inset(96% 0 5% 0);
+          clip-path: inset(96% 0 5% 0);
+        }
+        88.2352941176% {
+          -webkit-clip-path: inset(64% 0 20% 0);
+          clip-path: inset(64% 0 20% 0);
+        }
+        94.1176470588% {
+          -webkit-clip-path: inset(25% 0 54% 0);
+          clip-path: inset(25% 0 54% 0);
+        }
+        100% {
+          -webkit-clip-path: inset(32% 0 69% 0);
+          clip-path: inset(32% 0 69% 0);
+        }
+      }
 
-                                )
-                                  o.push(
-                                    this.bindings[e][n].handler === t
-                                      ? this.bindings[e].splice(n, 1)
-                                      : n++
-                                  );
-                                return o;
-                              }
-                            }),
-                            (e.prototype.trigger = function () {
-                              var e, t, n, r, o, s, i, a, u;
-                              if (
-                                ((n = arguments[0]),
-                                (e =
-                                  2 <= arguments.length
-                                    ? Y.call(arguments, 1)
-                                    : []),
-                                null != (i = this.bindings) ? i[n] : void 0)
-                              ) {
-                                for (
-                                  o = 0, u = [];
-                                  o < this.bindings[n].length;
-
-                                )
-                                  (a = this.bindings[n][o]),
-                                    (r = a.handler),
-                                    (t = a.ctx),
-                                    (s = a.once),
-                                    r.apply(null != t ? t : this, e),
-                                    u.push(
-                                      s ? this.bindings[n].splice(o, 1) : o++
-                                    );
-                                return u;
-                              }
-                            }),
-                            e
-                          );
-                        })(),
-                        p = window.Pace || {},
-                        window.Pace = p,
-                        T(p, c.prototype),
-                        j = p.options = T({}, x, window.paceOptions, k()),
-                        $ = ["ajax", "document", "eventLag", "elements"],
-                        I = 0,
-                        J = $.length;
-                      J > I;
-                      I++
-                    )
-                      (z = $[I]), j[z] === !0 && (j[z] = x[z]);
-                    (f = (function (e) {
-                      function t() {
-                        return (K = t.__super__.constructor.apply(
-                          this,
-                          arguments
-                        ));
-                      }
-                      return ee(t, e), t;
-                    })(Error)),
-                      (o = (function () {
-                        function e() {
-                          this.progress = 0;
-                        }
-                        return (
-                          (e.prototype.getElement = function () {
-                            var e;
-                            if (null == this.el) {
-                              if (((e = document.querySelector(j.target)), !e))
-                                throw new f();
-                              (this.el = document.createElement("div")),
-                                (this.el.className = "pace pace-active"),
-                                (document.body.className =
-                                  document.body.className.replace(
-                                    /pace-done/g,
-                                    ""
-                                  )),
-                                (document.body.className += " pace-running"),
-                                (this.el.innerHTML =
-                                  '<div class="pace-progress">\n  <div class="pace-progress-inner"></div>\n</div>\n<div class="pace-activity"></div>'),
-                                null != e.firstChild
-                                  ? e.insertBefore(this.el, e.firstChild)
-                                  : e.appendChild(this.el);
-                            }
-                            return this.el;
-                          }),
-                          (e.prototype.finish = function () {
-                            var e;
-                            return (
-                              (e = this.getElement()),
-                              (e.className = e.className.replace(
-                                "pace-active",
-                                ""
-                              )),
-                              (e.className += " pace-inactive"),
-                              (document.body.className =
-                                document.body.className.replace(
-                                  "pace-running",
-                                  ""
-                                )),
-                              (document.body.className += " pace-done")
-                            );
-                          }),
-                          (e.prototype.update = function (e) {
-                            return (this.progress = e), this.render();
-                          }),
-                          (e.prototype.destroy = function () {
-                            try {
-                              this.getElement().parentNode.removeChild(
-                                this.getElement()
-                              );
-                            } catch (e) {
-                              f = e;
-                            }
-                            return (this.el = void 0);
-                          }),
-                          (e.prototype.render = function () {
-                            var e, t, n, r, o, s, i;
-                            if (null == document.querySelector(j.target))
-                              return !1;
-                            for (
-                              e = this.getElement(),
-                                r = "translate3d(" + this.progress + "%, 0, 0)",
-                                i = [
-                                  "webkitTransform",
-                                  "msTransform",
-                                  "transform",
-                                ],
-                                o = 0,
-                                s = i.length;
-                              s > o;
-                              o++
-                            )
-                              (t = i[o]), (e.children[0].style[t] = r);
-                            return (
-                              (!this.lastRenderedProgress ||
-                                this.lastRenderedProgress |
-                                  (0 !== this.progress) |
-                                  0) &&
-                                (e.children[0].setAttribute(
-                                  "data-progress-text",
-                                  "" + (0 | this.progress) + "%"
-                                ),
-                                this.progress >= 100
-                                  ? (n = "99")
-                                  : ((n = this.progress < 10 ? "0" : ""),
-                                    (n += 0 | this.progress)),
-                                e.children[0].setAttribute(
-                                  "data-progress",
-                                  "" + n
-                                )),
-                              (this.lastRenderedProgress = this.progress)
-                            );
-                          }),
-                          (e.prototype.done = function () {
-                            return this.progress >= 100;
-                          }),
-                          e
-                        );
-                      })()),
-                      (l = (function () {
-                        function e() {
-                          this.bindings = {};
-                        }
-                        return (
-                          (e.prototype.trigger = function (e, t) {
-                            var n, r, o, s, i;
-                            if (null != this.bindings[e]) {
-                              for (
-                                s = this.bindings[e],
-                                  i = [],
-                                  r = 0,
-                                  o = s.length;
-                                o > r;
-                                r++
-                              )
-                                (n = s[r]), i.push(n.call(this, t));
-                              return i;
-                            }
-                          }),
-                          (e.prototype.on = function (e, t) {
-                            var n;
-                            return (
-                              null == (n = this.bindings)[e] && (n[e] = []),
-                              this.bindings[e].push(t)
-                            );
-                          }),
-                          e
-                        );
-                      })()),
-                      (H = window.XMLHttpRequest),
-                      (X = window.XDomainRequest),
-                      (W = window.WebSocket),
-                      (_ = function (e, t) {
-                        var n, r, o;
-                        o = [];
-                        for (r in t.prototype)
-                          try {
-                            o.push(
-                              null == e[r] && "function" != typeof t[r]
-                                ? "function" == typeof Object.defineProperty
-                                  ? Object.defineProperty(e, r, {
-                                      get: function () {
-                                        return t.prototype[r];
-                                      },
-                                      configurable: !0,
-                                      enumerable: !0,
-                                    })
-                                  : (e[r] = t.prototype[r])
-                                : void 0
-                            );
-                          } catch (s) {
-                            n = s;
-                          }
-                        return o;
-                      }),
-                      (E = []),
-                      (p.ignore = function () {
-                        var e, t, n;
-                        return (
-                          (t = arguments[0]),
-                          (e =
-                            2 <= arguments.length ? Y.call(arguments, 1) : []),
-                          E.unshift("ignore"),
-                          (n = t.apply(null, e)),
-                          E.shift(),
-                          n
-                        );
-                      }),
-                      (p.track = function () {
-                        var e, t, n;
-                        return (
-                          (t = arguments[0]),
-                          (e =
-                            2 <= arguments.length ? Y.call(arguments, 1) : []),
-                          E.unshift("track"),
-                          (n = t.apply(null, e)),
-                          E.shift(),
-                          n
-                        );
-                      }),
-                      (U = function (e) {
-                        var t;
-                        if ((null == e && (e = "GET"), "track" === E[0]))
-                          return "force";
-                        if (!E.length && j.ajax) {
-                          if ("socket" === e && j.ajax.trackWebSockets)
-                            return !0;
-                          if (
-                            ((t = e.toUpperCase()),
-                            te.call(j.ajax.trackMethods, t) >= 0)
-                          )
-                            return !0;
-                        }
-                        return !1;
-                      }),
-                      (d = (function (e) {
-                        function t() {
-                          var e,
-                            n = this;
-                          t.__super__.constructor.apply(this, arguments),
-                            (e = function (e) {
-                              var t;
-                              return (
-                                (t = e.open),
-                                (e.open = function (r, o, s) {
-                                  return (
-                                    U(r) &&
-                                      n.trigger("request", {
-                                        type: r,
-                                        url: o,
-                                        request: e,
-                                      }),
-                                    t.apply(e, arguments)
-                                  );
-                                })
-                              );
-                            }),
-                            (window.XMLHttpRequest = function (t) {
-                              var n;
-                              return (n = new H(t)), e(n), n;
-                            });
-                          try {
-                            _(window.XMLHttpRequest, H);
-                          } catch (r) {}
-                          if (null != X) {
-                            window.XDomainRequest = function () {
-                              var t;
-                              return (t = new X()), e(t), t;
-                            };
-                            try {
-                              _(window.XDomainRequest, X);
-                            } catch (r) {}
-                          }
-                          if (null != W && j.ajax.trackWebSockets) {
-                            window.WebSocket = function (e, t) {
-                              var r;
-                              return (
-                                (r = null != t ? new W(e, t) : new W(e)),
-                                U("socket") &&
-                                  n.trigger("request", {
-                                    type: "socket",
-                                    url: e,
-                                    protocols: t,
-                                    request: r,
-                                  }),
-                                r
-                              );
-                            };
-                            try {
-                              _(window.WebSocket, W);
-                            } catch (r) {}
-                          }
-                        }
-                        return ee(t, e), t;
-                      })(l)),
-                      (G = null),
-                      (P = function () {
-                        return null == G && (G = new d()), G;
-                      }),
-                      (F = function (e) {
-                        var t, n, r, o;
-                        for (
-                          o = j.ajax.ignoreURLs, n = 0, r = o.length;
-                          r > n;
-                          n++
-                        )
-                          if (((t = o[n]), "string" == typeof t)) {
-                            if (-1 !== e.indexOf(t)) return !0;
-                          } else if (t.test(e)) return !0;
-                        return !1;
-                      }),
-                      P().on("request", function (e) {
-                        var t, r, o, s, i;
-                        return (
-                          (s = e.type),
-                          (o = e.request),
-                          (i = e.url),
-                          F(i)
-                            ? void 0
-                            : p.running ||
-                              (j.restartOnRequestAfter === !1 &&
-                                "force" !== U(s))
-                            ? void 0
-                            : ((r = arguments),
-                              (t = j.restartOnRequestAfter || 0),
-                              "boolean" == typeof t && (t = 0),
-                              setTimeout(function () {
-                                var e, t, i, a, u, c;
-                                if (
-                                  (e =
-                                    "socket" === s
-                                      ? o.readyState < 2
-                                      : 0 < (a = o.readyState) && 4 > a)
-                                ) {
-                                  for (
-                                    p.restart(),
-                                      u = p.sources,
-                                      c = [],
-                                      t = 0,
-                                      i = u.length;
-                                    i > t;
-                                    t++
-                                  ) {
-                                    if (((z = u[t]), z instanceof n)) {
-                                      z.watch.apply(z, r);
-                                      break;
-                                    }
-                                    c.push(void 0);
-                                  }
-                                  return c;
-                                }
-                              }, t))
-                        );
-                      }),
-                      (n = (function () {
-                        function e() {
-                          var e = this;
-                          (this.elements = []),
-                            P().on("request", function () {
-                              return e.watch.apply(e, arguments);
-                            });
-                        }
-                        return (
-                          (e.prototype.watch = function (e) {
-                            var t, n, r, o;
-                            return (
-                              (r = e.type),
-                              (t = e.request),
-                              (o = e.url),
-                              F(o)
-                                ? void 0
-                                : ((n = "socket" === r ? new m(t) : new y(t)),
-                                  this.elements.push(n))
-                            );
-                          }),
-                          e
-                        );
-                      })()),
-                      (y = (function () {
-                        function e(e) {
-                          var t,
-                            n,
-                            r,
-                            o,
-                            s,
-                            i,
-                            a = this;
-                          if (
-                            ((this.progress = 0), null != window.ProgressEvent)
-                          )
-                            for (
-                              n = null,
-                                e.addEventListener(
-                                  "progress",
-                                  function (e) {
-                                    return (a.progress = e.lengthComputable
-                                      ? (100 * e.loaded) / e.total
-                                      : a.progress + (100 - a.progress) / 2);
-                                  },
-                                  !1
-                                ),
-                                i = ["load", "abort", "timeout", "error"],
-                                r = 0,
-                                o = i.length;
-                              o > r;
-                              r++
-                            )
-                              (t = i[r]),
-                                e.addEventListener(
-                                  t,
-                                  function () {
-                                    return (a.progress = 100);
-                                  },
-                                  !1
-                                );
-                          else
-                            (s = e.onreadystatechange),
-                              (e.onreadystatechange = function () {
-                                var t;
-                                return (
-                                  0 === (t = e.readyState) || 4 === t
-                                    ? (a.progress = 100)
-                                    : 3 === e.readyState && (a.progress = 50),
-                                  "function" == typeof s
-                                    ? s.apply(null, arguments)
-                                    : void 0
-                                );
-                              });
-                        }
-                        return e;
-                      })()),
-                      (m = (function () {
-                        function e(e) {
-                          var t,
-                            n,
-                            r,
-                            o,
-                            s = this;
-                          for (
-                            this.progress = 0,
-                              o = ["error", "open"],
-                              n = 0,
-                              r = o.length;
-                            r > n;
-                            n++
-                          )
-                            (t = o[n]),
-                              e.addEventListener(
-                                t,
-                                function () {
-                                  return (s.progress = 100);
-                                },
-                                !1
-                              );
-                        }
-                        return e;
-                      })()),
-                      (i = (function () {
-                        function e(e) {
-                          var t, n, r, o;
-                          for (
-                            null == e && (e = {}),
-                              this.elements = [],
-                              null == e.selectors && (e.selectors = []),
-                              o = e.selectors,
-                              n = 0,
-                              r = o.length;
-                            r > n;
-                            n++
-                          )
-                            (t = o[n]), this.elements.push(new a(t));
-                        }
-                        return e;
-                      })()),
-                      (a = (function () {
-                        function e(e) {
-                          (this.selector = e),
-                            (this.progress = 0),
-                            this.check();
-                        }
-                        return (
-                          (e.prototype.check = function () {
-                            var e = this;
-                            return document.querySelector(this.selector)
-                              ? this.done()
-                              : setTimeout(function () {
-                                  return e.check();
-                                }, j.elements.checkInterval);
-                          }),
-                          (e.prototype.done = function () {
-                            return (this.progress = 100);
-                          }),
-                          e
-                        );
-                      })()),
-                      (s = (function () {
-                        function e() {
-                          var e,
-                            t,
-                            n = this;
-                          (this.progress =
-                            null != (t = this.states[document.readyState])
-                              ? t
-                              : 100),
-                            (e = document.onreadystatechange),
-                            (document.onreadystatechange = function () {
-                              return (
-                                null != n.states[document.readyState] &&
-                                  (n.progress = n.states[document.readyState]),
-                                "function" == typeof e
-                                  ? e.apply(null, arguments)
-                                  : void 0
-                              );
-                            });
-                        }
-                        return (
-                          (e.prototype.states = {
-                            loading: 0,
-                            interactive: 50,
-                            complete: 100,
-                          }),
-                          e
-                        );
-                      })()),
-                      (u = (function () {
-                        function e() {
-                          var e,
-                            t,
-                            n,
-                            r,
-                            o,
-                            s = this;
-                          (this.progress = 0),
-                            (e = 0),
-                            (o = []),
-                            (r = 0),
-                            (n = R()),
-                            (t = setInterval(function () {
-                              var i;
-                              return (
-                                (i = R() - n - 50),
-                                (n = R()),
-                                o.push(i),
-                                o.length > j.eventLag.sampleCount && o.shift(),
-                                (e = w(o)),
-                                ++r >= j.eventLag.minSamples &&
-                                e < j.eventLag.lagThreshold
-                                  ? ((s.progress = 100), clearInterval(t))
-                                  : (s.progress = 100 * (3 / (e + 3)))
-                              );
-                            }, 50));
-                        }
-                        return e;
-                      })()),
-                      (g = (function () {
-                        function e(e) {
-                          (this.source = e),
-                            (this.last = this.sinceLastUpdate = 0),
-                            (this.rate = j.initialRate),
-                            (this.catchup = 0),
-                            (this.progress = this.lastProgress = 0),
-                            null != this.source &&
-                              (this.progress = O(this.source, "progress"));
-                        }
-                        return (
-                          (e.prototype.tick = function (e, t) {
-                            var n;
-                            return (
-                              null == t && (t = O(this.source, "progress")),
-                              t >= 100 && (this.done = !0),
-                              t === this.last
-                                ? (this.sinceLastUpdate += e)
-                                : (this.sinceLastUpdate &&
-                                    (this.rate =
-                                      (t - this.last) / this.sinceLastUpdate),
-                                  (this.catchup =
-                                    (t - this.progress) / j.catchupTime),
-                                  (this.sinceLastUpdate = 0),
-                                  (this.last = t)),
-                              t > this.progress &&
-                                (this.progress += this.catchup * e),
-                              (n =
-                                1 -
-                                Math.pow(this.progress / 100, j.easeFactor)),
-                              (this.progress += n * this.rate * e),
-                              (this.progress = Math.min(
-                                this.lastProgress + j.maxProgressPerFrame,
-                                this.progress
-                              )),
-                              (this.progress = Math.max(0, this.progress)),
-                              (this.progress = Math.min(100, this.progress)),
-                              (this.lastProgress = this.progress),
-                              this.progress
-                            );
-                          }),
-                          e
-                        );
-                      })()),
-                      (B = null),
-                      (A = null),
-                      (b = null),
-                      (D = null),
-                      (v = null),
-                      (S = null),
-                      (p.running = !1),
-                      (L = function () {
-                        return j.restartOnPushState ? p.restart() : void 0;
-                      }),
-                      null != window.history.pushState &&
-                        ((V = window.history.pushState),
-                        (window.history.pushState = function () {
-                          return L(), V.apply(window.history, arguments);
-                        })),
-                      null != window.history.replaceState &&
-                        ((Q = window.history.replaceState),
-                        (window.history.replaceState = function () {
-                          return L(), Q.apply(window.history, arguments);
-                        })),
-                      (h = { ajax: n, elements: i, document: s, eventLag: u }),
-                      (N = function () {
-                        var e, t, n, r, s, i, a, u;
-                        for (
-                          p.sources = B = [],
-                            i = ["ajax", "elements", "document", "eventLag"],
-                            t = 0,
-                            r = i.length;
-                          r > t;
-                          t++
-                        )
-                          (e = i[t]), j[e] !== !1 && B.push(new h[e](j[e]));
-                        for (
-                          u = null != (a = j.extraSources) ? a : [],
-                            n = 0,
-                            s = u.length;
-                          s > n;
-                          n++
-                        )
-                          (z = u[n]), B.push(new z(j));
-                        return (p.bar = b = new o()), (A = []), (D = new g());
-                      })(),
-                      (p.stop = function () {
-                        return (
-                          p.trigger("stop"),
-                          (p.running = !1),
-                          b.destroy(),
-                          (S = !0),
-                          null != v &&
-                            ("function" == typeof q && q(v), (v = null)),
-                          N()
-                        );
-                      }),
-                      (p.restart = function () {
-                        return p.trigger("restart"), p.stop(), p.start();
-                      }),
-                      (p.go = function () {
-                        var e;
-                        return (
-                          (p.running = !0),
-                          b.render(),
-                          (e = R()),
-                          (S = !1),
-                          (v = M(function (t, n) {
-                            var r, o, s, i, a, u, c, l, f, d, h, m, y, v, w, q;
-                            for (
-                              l = 100 - b.progress,
-                                o = h = 0,
-                                s = !0,
-                                u = m = 0,
-                                v = B.length;
-                              v > m;
-                              u = ++m
-                            )
-                              for (
-                                z = B[u],
-                                  d = null != A[u] ? A[u] : (A[u] = []),
-                                  a = null != (q = z.elements) ? q : [z],
-                                  c = y = 0,
-                                  w = a.length;
-                                w > y;
-                                c = ++y
-                              )
-                                (i = a[c]),
-                                  (f = null != d[c] ? d[c] : (d[c] = new g(i))),
-                                  (s &= f.done),
-                                  f.done || (o++, (h += f.tick(t)));
-                            return (
-                              (r = h / o),
-                              b.update(D.tick(t, r)),
-                              b.done() || s || S
-                                ? (b.update(100),
-                                  p.trigger("done"),
-                                  setTimeout(function () {
-                                    return (
-                                      b.finish(),
-                                      (p.running = !1),
-                                      p.trigger("hide")
-                                    );
-                                  }, Math.max(
-                                    j.ghostTime,
-                                    Math.max(j.minTime - (R() - e), 0)
-                                  )))
-                                : n()
-                            );
-                          }))
-                        );
-                      }),
-                      (p.start = function (e) {
-                        T(j, e), (p.running = !0);
-                        try {
-                          b.render();
-                        } catch (t) {
-                          f = t;
-                        }
-                        return document.querySelector(".pace")
-                          ? (p.trigger("start"), p.go())
-                          : setTimeout(p.start, 50);
-                      }),
-                      "function" == typeof r && r.amd
-                        ? r(["pace"], function () {
-                            return p;
-                          })
-                        : "object" == typeof t
-                        ? (e.exports = p)
-                        : j.startOnPageLoad && p.start();
-                  }.call(this),
-                    o("undefined" != typeof Pace ? Pace : window.Pace));
-                }.call(e, void 0, void 0, void 0, void 0, function (e) {
-                  t.exports = e;
-                }));
-              }.call(
-                this,
-                "undefined" != typeof global
-                  ? global
-                  : "undefined" != typeof self
-                  ? self
-                  : "undefined" != typeof window
-                  ? window
-                  : {}
-              ));
-            },
-            {},
-          ],
-          3: [
-            function (e, t, n) {
-              (function (e) {
-                (function (e, t, n, r, o) {
-                  !(function (e, t, n) {
-                    function r(e, t) {
-                      return typeof e === t;
-                    }
-                    function o() {
-                      var e, t, n, o, s, i, a;
-                      for (var c in u) {
-                        if (
-                          ((e = []),
-                          (t = u[c]),
-                          t.name &&
-                            (e.push(t.name.toLowerCase()),
-                            t.options &&
-                              t.options.aliases &&
-                              t.options.aliases.length))
-                        )
-                          for (n = 0; n < t.options.aliases.length; n++)
-                            e.push(t.options.aliases[n].toLowerCase());
-                        for (
-                          o = r(t.fn, "function") ? t.fn() : t.fn, s = 0;
-                          s < e.length;
-                          s++
-                        )
-                          (i = e[s]),
-                            (a = i.split(".")),
-                            1 === a.length
-                              ? (l[a[0]] = o)
-                              : (!l[a[0]] ||
-                                  l[a[0]] instanceof Boolean ||
-                                  (l[a[0]] = new Boolean(l[a[0]])),
-                                (l[a[0]][a[1]] = o)),
-                            p.push((o ? "" : "no-") + a.join("-"));
-                      }
-                    }
-                    function s(e) {
-                      var t = d.className,
-                        n = l._config.classPrefix || "";
-                      if ((h && (t = t.baseVal), l._config.enableJSClass)) {
-                        var r = new RegExp("(^|\\s)" + n + "no-js(\\s|$)");
-                        t = t.replace(r, "$1" + n + "js$2");
-                      }
-                      l._config.enableClasses &&
-                        ((t += " " + n + e.join(" " + n)),
-                        h ? (d.className.baseVal = t) : (d.className = t));
-                    }
-                    function i(e, t) {
-                      if ("object" == typeof e)
-                        for (var n in e) f(e, n) && i(n, e[n]);
-                      else {
-                        e = e.toLowerCase();
-                        var r = e.split("."),
-                          o = l[r[0]];
-                        if (
-                          (2 == r.length && (o = o[r[1]]),
-                          "undefined" != typeof o)
-                        )
-                          return l;
-                        (t = "function" == typeof t ? t() : t),
-                          1 == r.length
-                            ? (l[r[0]] = t)
-                            : (!l[r[0]] ||
-                                l[r[0]] instanceof Boolean ||
-                                (l[r[0]] = new Boolean(l[r[0]])),
-                              (l[r[0]][r[1]] = t)),
-                          s([(t && 0 != t ? "" : "no-") + r.join("-")]),
-                          l._trigger(e, t);
-                      }
-                      return l;
-                    }
-                    function a() {
-                      return "function" != typeof t.createElement
-                        ? t.createElement(arguments[0])
-                        : h
-                        ? t.createElementNS.call(
-                            t,
-                            "http://www.w3.org/2000/svg",
-                            arguments[0]
-                          )
-                        : t.createElement.apply(t, arguments);
-                    }
-                    var u = [],
-                      c = {
-                        _version: "3.0.0-alpha.4",
-                        _config: {
-                          classPrefix: "",
-                          enableClasses: !0,
-                          enableJSClass: !0,
-                          usePrefixes: !0,
-                        },
-                        _q: [],
-                        on: function (e, t) {
-                          var n = this;
-                          setTimeout(function () {
-                            t(n[e]);
-                          }, 0);
-                        },
-                        addTest: function (e, t, n) {
-                          u.push({ name: e, fn: t, options: n });
-                        },
-                        addAsyncTest: function (e) {
-                          u.push({ name: null, fn: e });
-                        },
-                      },
-                      l = function () {};
-                    (l.prototype = c), (l = new l());
-                    var f,
-                      p = [],
-                      d = t.documentElement,
-                      h = "svg" === d.nodeName.toLowerCase();
-                    !(function () {
-                      var e = {}.hasOwnProperty;
-                      f =
-                        r(e, "undefined") || r(e.call, "undefined")
-                          ? function (e, t) {
-                              return (
-                                t in e &&
-                                r(e.constructor.prototype[t], "undefined")
-                              );
-                            }
-                          : function (t, n) {
-                              return e.call(t, n);
-                            };
-                    })(),
-                      (c._l = {}),
-                      (c.on = function (e, t) {
-                        this._l[e] || (this._l[e] = []),
-                          this._l[e].push(t),
-                          l.hasOwnProperty(e) &&
-                            setTimeout(function () {
-                              l._trigger(e, l[e]);
-                            }, 0);
-                      }),
-                      (c._trigger = function (e, t) {
-                        if (this._l[e]) {
-                          var n = this._l[e];
-                          setTimeout(function () {
-                            var e, r;
-                            for (e = 0; e < n.length; e++) (r = n[e])(t);
-                          }, 0),
-                            delete this._l[e];
-                        }
-                      }),
-                      l._q.push(function () {
-                        c.addTest = i;
-                      }),
-                      l.addTest(
-                        "svg",
-                        !!t.createElementNS &&
-                          !!t.createElementNS(
-                            "http://www.w3.org/2000/svg",
-                            "svg"
-                          ).createSVGRect
-                      ),
-                      l.addTest("dataset", function () {
-                        var e = a("div");
-                        return (
-                          e.setAttribute("data-a-b", "c"),
-                          !(!e.dataset || "c" !== e.dataset.aB)
-                        );
-                      }),
-                      l.addTest("webaudio", function () {
-                        var t = "webkitAudioContext" in e,
-                          n = "AudioContext" in e;
-                        return l._config.usePrefixes ? t || n : n;
-                      }),
-                      l.addTest(
-                        "contains",
-                        r(String.prototype.contains, "function")
-                      ),
-                      o(),
-                      s(p),
-                      delete c.addTest,
-                      delete c.addAsyncTest;
-                    for (var g = 0; g < l._q.length; g++) l._q[g]();
-                    e.Modernizr = l;
-                  })(window, document),
-                    o(
-                      "undefined" != typeof Modernizr
-                        ? Modernizr
-                        : window.Modernizr
-                    );
-                }.call(e, void 0, void 0, void 0, void 0, function (e) {
-                  t.exports = e;
-                }));
-              }.call(
-                this,
-                "undefined" != typeof global
-                  ? global
-                  : "undefined" != typeof self
-                  ? self
-                  : "undefined" != typeof window
-                  ? window
-                  : {}
-              ));
-            },
-            {},
-          ],
-        },
-        {},
-        [1]
-      );
-    </script>
+      @keyframes glitchAnimationRed {
+        0% {
+          -webkit-clip-path: inset(79% 0 14% 0);
+          clip-path: inset(79% 0 14% 0);
+        }
+        5.8823529412% {
+          -webkit-clip-path: inset(48% 0 2% 0);
+          clip-path: inset(48% 0 2% 0);
+        }
+        11.7647058824% {
+          -webkit-clip-path: inset(65% 0 1% 0);
+          clip-path: inset(65% 0 1% 0);
+        }
+        17.6470588235% {
+          -webkit-clip-path: inset(85% 0 16% 0);
+          clip-path: inset(85% 0 16% 0);
+        }
+        23.5294117647% {
+          -webkit-clip-path: inset(25% 0 53% 0);
+          clip-path: inset(25% 0 53% 0);
+        }
+        29.4117647059% {
+          -webkit-clip-path: inset(11% 0 5% 0);
+          clip-path: inset(11% 0 5% 0);
+        }
+        35.2941176471% {
+          -webkit-clip-path: inset(24% 0 68% 0);
+          clip-path: inset(24% 0 68% 0);
+        }
+        41.1764705882% {
+          -webkit-clip-path: inset(64% 0 11% 0);
+          clip-path: inset(64% 0 11% 0);
+        }
+        47.0588235294% {
+          -webkit-clip-path: inset(91% 0 8% 0);
+          clip-path: inset(91% 0 8% 0);
+        }
+        52.9411764706% {
+          -webkit-clip-path: inset(65% 0 27% 0);
+          clip-path: inset(65% 0 27% 0);
+        }
+        58.8235294118% {
+          -webkit-clip-path: inset(75% 0 26% 0);
+          clip-path: inset(75% 0 26% 0);
+        }
+        64.7058823529% {
+          -webkit-clip-path: inset(58% 0 12% 0);
+          clip-path: inset(58% 0 12% 0);
+        }
+        70.5882352941% {
+          -webkit-clip-path: inset(85% 0 6% 0);
+          clip-path: inset(85% 0 6% 0);
+        }
+        76.4705882353% {
+          -webkit-clip-path: inset(64% 0 22% 0);
+          clip-path: inset(64% 0 22% 0);
+        }
+        82.3529411765% {
+          -webkit-clip-path: inset(96% 0 5% 0);
+          clip-path: inset(96% 0 5% 0);
+        }
+        88.2352941176% {
+          -webkit-clip-path: inset(64% 0 20% 0);
+          clip-path: inset(64% 0 20% 0);
+        }
+        94.1176470588% {
+          -webkit-clip-path: inset(25% 0 54% 0);
+          clip-path: inset(25% 0 54% 0);
+        }
+        100% {
+          -webkit-clip-path: inset(32% 0 69% 0);
+          clip-path: inset(32% 0 69% 0);
+        }
+      }
+      @-webkit-keyframes glitchAnimationBlue {
+        0% {
+          -webkit-clip-path: inset(90% 0 3% 0);
+          clip-path: inset(90% 0 3% 0);
+        }
+        5.8823529412% {
+          -webkit-clip-path: inset(91% 0 2% 0);
+          clip-path: inset(91% 0 2% 0);
+        }
+        11.7647058824% {
+          -webkit-clip-path: inset(8% 0 93% 0);
+          clip-path: inset(8% 0 93% 0);
+        }
+        17.6470588235% {
+          -webkit-clip-path: inset(75% 0 9% 0);
+          clip-path: inset(75% 0 9% 0);
+        }
+        23.5294117647% {
+          -webkit-clip-path: inset(13% 0 9% 0);
+          clip-path: inset(13% 0 9% 0);
+        }
+        29.4117647059% {
+          -webkit-clip-path: inset(40% 0 47% 0);
+          clip-path: inset(40% 0 47% 0);
+        }
+        35.2941176471% {
+          -webkit-clip-path: inset(9% 0 83% 0);
+          clip-path: inset(9% 0 83% 0);
+        }
+        41.1764705882% {
+          -webkit-clip-path: inset(5% 0 35% 0);
+          clip-path: inset(5% 0 35% 0);
+        }
+        47.0588235294% {
+          -webkit-clip-path: inset(51% 0 11% 0);
+          clip-path: inset(51% 0 11% 0);
+        }
+        52.9411764706% {
+          -webkit-clip-path: inset(94% 0 3% 0);
+          clip-path: inset(94% 0 3% 0);
+        }
+        58.8235294118% {
+          -webkit-clip-path: inset(52% 0 32% 0);
+          clip-path: inset(52% 0 32% 0);
+        }
+        64.7058823529% {
+          -webkit-clip-path: inset(86% 0 14% 0);
+          clip-path: inset(86% 0 14% 0);
+        }
+        70.5882352941% {
+          -webkit-clip-path: inset(54% 0 39% 0);
+          clip-path: inset(54% 0 39% 0);
+        }
+        76.4705882353% {
+          -webkit-clip-path: inset(3% 0 7% 0);
+          clip-path: inset(3% 0 7% 0);
+        }
+        82.3529411765% {
+          -webkit-clip-path: inset(12% 0 80% 0);
+          clip-path: inset(12% 0 80% 0);
+        }
+        88.2352941176% {
+          -webkit-clip-path: inset(88% 0 6% 0);
+          clip-path: inset(88% 0 6% 0);
+        }
+        94.1176470588% {
+          -webkit-clip-path: inset(13% 0 39% 0);
+          clip-path: inset(13% 0 39% 0);
+        }
+        100% {
+          -webkit-clip-path: inset(57% 0 18% 0);
+          clip-path: inset(57% 0 18% 0);
+        }
+      }
+      @keyframes glitchAnimationBlue {
+        0% {
+          -webkit-clip-path: inset(90% 0 3% 0);
+          clip-path: inset(90% 0 3% 0);
+        }
+        5.8823529412% {
+          -webkit-clip-path: inset(91% 0 2% 0);
+          clip-path: inset(91% 0 2% 0);
+        }
+        11.7647058824% {
+          -webkit-clip-path: inset(8% 0 93% 0);
+          clip-path: inset(8% 0 93% 0);
+        }
+        17.6470588235% {
+          -webkit-clip-path: inset(75% 0 9% 0);
+          clip-path: inset(75% 0 9% 0);
+        }
+        23.5294117647% {
+          -webkit-clip-path: inset(13% 0 9% 0);
+          clip-path: inset(13% 0 9% 0);
+        }
+        29.4117647059% {
+          -webkit-clip-path: inset(40% 0 47% 0);
+          clip-path: inset(40% 0 47% 0);
+        }
+        35.2941176471% {
+          -webkit-clip-path: inset(9% 0 83% 0);
+          clip-path: inset(9% 0 83% 0);
+        }
+        41.1764705882% {
+          -webkit-clip-path: inset(5% 0 35% 0);
+          clip-path: inset(5% 0 35% 0);
+        }
+        47.0588235294% {
+          -webkit-clip-path: inset(51% 0 11% 0);
+          clip-path: inset(51% 0 11% 0);
+        }
+        52.9411764706% {
+          -webkit-clip-path: inset(94% 0 3% 0);
+          clip-path: inset(94% 0 3% 0);
+        }
+        58.8235294118% {
+          -webkit-clip-path: inset(52% 0 32% 0);
+          clip-path: inset(52% 0 32% 0);
+        }
+        64.7058823529% {
+          -webkit-clip-path: inset(86% 0 14% 0);
+          clip-path: inset(86% 0 14% 0);
+        }
+        70.5882352941% {
+          -webkit-clip-path: inset(54% 0 39% 0);
+          clip-path: inset(54% 0 39% 0);
+        }
+        76.4705882353% {
+          -webkit-clip-path: inset(3% 0 7% 0);
+          clip-path: inset(3% 0 7% 0);
+        }
+        82.3529411765% {
+          -webkit-clip-path: inset(12% 0 80% 0);
+          clip-path: inset(12% 0 80% 0);
+        }
+        88.2352941176% {
+          -webkit-clip-path: inset(88% 0 6% 0);
+          clip-path: inset(88% 0 6% 0);
+        }
+        94.1176470588% {
+          -webkit-clip-path: inset(13% 0 39% 0);
+          clip-path: inset(13% 0 39% 0);
+        }
+        100% {
+          -webkit-clip-path: inset(57% 0 18% 0);
+          clip-path: inset(57% 0 18% 0);
+        }
+      }
+      @-webkit-keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+      @-webkit-keyframes blink-caret {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: white;
+        }
+      }
+      @keyframes blink-caret {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: white;
+        }
+      }
+      @-webkit-keyframes init {
+        0% {
+          transform: scaleY(0) scaleX(0);
+        }
+        50% {
+          transform: scaleY(1) scaleX(0.005);
+        }
+        65%,
+        100% {
+          transform: scaleY(1) scaleX(1);
+        }
+      }
+      @keyframes init {
+        0% {
+          transform: scaleY(0) scaleX(0);
+        }
+        50% {
+          transform: scaleY(1) scaleX(0.005);
+        }
+        65%,
+        100% {
+          transform: scaleY(1) scaleX(1);
+        }
+      }
+    </style>
+    <style>
+      @keyframes idle {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      .hb-container {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        position: relative;
+        top: 50%;
+        left: 20%;
+      }
+      .hb-container .ballon {
+        position: absolute;
+        height: 150px;
+        width: 150px;
+        animation: idle 6s ease-in-out infinite;
+      }
+      .hb-container .ballon svg {
+        fill: white;
+        width: 100%;
+        height: 100%;
+      }
+      .hb-container .ballon:nth-of-type(1) {
+        top: -150px;
+        left: -150px;
+        -webkit-animation-delay: 0.5s;
+        animation-delay: 0.5s;
+      }
+      .hb-container .ballon:nth-of-type(1) svg {
+        fill: #6eeb83;
+      }
+      .hb-container .ballon:nth-of-type(2) {
+        top: -50px;
+        left: -300px;
+        -webkit-animation-delay: 2s;
+        animation-delay: 2s;
+      }
+      .hb-container .ballon:nth-of-type(2) svg {
+        fill: #1be7ff;
+      }
+      .hb-container .ballon:nth-of-type(3) {
+        top: -100px;
+        right: -100px;
+        -webkit-animation-delay: 2.5s;
+        animation-delay: 2.5s;
+      }
+      .hb-container .ballon:nth-of-type(3) svg {
+        fill: #e4ff1a;
+      }
+      .hb-container .ballon:nth-of-type(4) {
+        top: -20px;
+        right: -250px;
+        -webkit-animation-delay: 3s;
+        animation-delay: 3s;
+      }
+      .hb-container .ballon:nth-of-type(4) svg {
+        fill: #e500a4;
+      }
+    </style>
     <style>
       html {
         font-size: 100%;
@@ -1838,75 +1329,227 @@
     <link rel="stylesheet" href="assets/css/main-263f5dab.css" />
   </head>
   <body>
-    <div
-      class="Logo js-logo"
-      data-0="opacity: 0;"
-      data-1000="opacity: 0; display: inline;"
-      data-1100="opacity: 1;"
-    >
-      <img src="assets/images/logo.png" class="Logo-image" id="LogoImg" />
-
-      <canvas
-        id="Visualizer"
-        width="640"
-        height="50"
-        style="position: fixed; z-index: 10"
-      ></canvas>
-
-      <audio id="Soundtrack">
-        <source src="assets/audio/soundtrack.mp4" type="audio/mpeg" />
-        <source src="assets/audio/soundtrack.mp4" type="audio/ogg" />
-      </audio>
-
-      <div class="Logo-player is-hidden js-player">
-        <a
-          href="#"
-          class="Logo-playButton icon icon-play"
-          id="PlayButton"
-          data-1200="opacity: 0;"
-          data-1201="opacity: 1; transform:translate(0px, 0em);"
-          data-1350="transform:translate(0px, 3em);"
-          >Play!</a
-        >
+    <div id="login" class="console" style="z-index: 1111; width: 100vw; height: 100vh">
+      <div class="line line-prompt">
+        Please authorize. Eye scan deprecated. Enter password:
       </div>
+      <div class="line line-prompt cl-input" id="auth-input" contenteditable></div>
+      <div class="line cl-loading"></div>
     </div>
 
-    <div id="YGLF-intro" class="is-hidden">
       <div
-        class="WelcomeMessage"
-        data-0="z-index: 2; opacity: 1"
-        data-130="opacity: 0;"
-        data-131="z-index: 0;"
+id="app" style="z-index: -1"
+        class="Logo js-logo hb-container"
+        data-0="opacity: 0;"
+        data-1000="opacity: 0; display: inline;"
+        data-1100="opacity: 1;"
       >
-        <p class="WelcomeMessage-cell">
-          Important notification from <span class="u-noLineBreak">NASA</span>
-        </p>
+        <div class="ballon">
+          <svg
+            id="ballon"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="1.1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 462.4 462.4"
+            style="enable-background: new 0 0 462.4 462.4"
+            xml:space="preserve"
+          >
+            <path
+              d="M352,142C352,63.6,298,0,231.2,0S110.4,64,110.4,142.4c0,68.8,42,126.4,97.2,139.6l-14,34.4c-0.8,2-0.4,4,0.4,5.6    c1.2,1.6,2.8,2.8,4.8,2.8H218c-9.2,18-15.6,45.6,6.8,62.8c24.4,18.8-7.6,64.8-8,65.2c-2,2.8-1.2,6.4,1.6,8.4    c1.2,0.8,2.4,1.2,3.6,1.2c2,0,3.6-0.8,4.8-2.4c1.6-2.4,38.8-56,5.2-81.6c-21.2-16-5.6-44.4-0.4-53.2h25.2c2,0,4-1.2,5.2-2.8    s1.2-4,0.4-5.6l-13.2-34C307.2,272.8,352,213.6,352,142z M208,312.4l11.6-28.8c4,0.4,7.6,0.8,11.6,0.8c2,0,3.6,0,5.2,0l12,28H208z     M231.2,272.4c-60,0-108.8-58.4-108.8-130.4c0-71.6,48.8-130,108.8-130S340,70.4,340,142.4C340,214,291.2,272.4,231.2,272.4z"
+            />
+          </svg>
+        </div>
+        <div class="ballon">
+          <svg
+            id="ballon"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="1.1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 462.4 462.4"
+            style="enable-background: new 0 0 462.4 462.4"
+            xml:space="preserve"
+          >
+            <path
+              d="M352,142C352,63.6,298,0,231.2,0S110.4,64,110.4,142.4c0,68.8,42,126.4,97.2,139.6l-14,34.4c-0.8,2-0.4,4,0.4,5.6    c1.2,1.6,2.8,2.8,4.8,2.8H218c-9.2,18-15.6,45.6,6.8,62.8c24.4,18.8-7.6,64.8-8,65.2c-2,2.8-1.2,6.4,1.6,8.4    c1.2,0.8,2.4,1.2,3.6,1.2c2,0,3.6-0.8,4.8-2.4c1.6-2.4,38.8-56,5.2-81.6c-21.2-16-5.6-44.4-0.4-53.2h25.2c2,0,4-1.2,5.2-2.8    s1.2-4,0.4-5.6l-13.2-34C307.2,272.8,352,213.6,352,142z M208,312.4l11.6-28.8c4,0.4,7.6,0.8,11.6,0.8c2,0,3.6,0,5.2,0l12,28H208z     M231.2,272.4c-60,0-108.8-58.4-108.8-130.4c0-71.6,48.8-130,108.8-130S340,70.4,340,142.4C340,214,291.2,272.4,231.2,272.4z"
+            />
+          </svg>
+        </div>
+        <div class="ballon">
+          <svg
+            id="ballon"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="1.1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 462.4 462.4"
+            style="enable-background: new 0 0 462.4 462.4"
+            xml:space="preserve"
+          >
+            <path
+              d="M352,142C352,63.6,298,0,231.2,0S110.4,64,110.4,142.4c0,68.8,42,126.4,97.2,139.6l-14,34.4c-0.8,2-0.4,4,0.4,5.6    c1.2,1.6,2.8,2.8,4.8,2.8H218c-9.2,18-15.6,45.6,6.8,62.8c24.4,18.8-7.6,64.8-8,65.2c-2,2.8-1.2,6.4,1.6,8.4    c1.2,0.8,2.4,1.2,3.6,1.2c2,0,3.6-0.8,4.8-2.4c1.6-2.4,38.8-56,5.2-81.6c-21.2-16-5.6-44.4-0.4-53.2h25.2c2,0,4-1.2,5.2-2.8    s1.2-4,0.4-5.6l-13.2-34C307.2,272.8,352,213.6,352,142z M208,312.4l11.6-28.8c4,0.4,7.6,0.8,11.6,0.8c2,0,3.6,0,5.2,0l12,28H208z     M231.2,272.4c-60,0-108.8-58.4-108.8-130.4c0-71.6,48.8-130,108.8-130S340,70.4,340,142.4C340,214,291.2,272.4,231.2,272.4z"
+            />
+          </svg>
+        </div>
+        <div class="ballon">
+          <svg
+            id="ballon"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="1.1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 462.4 462.4"
+            style="enable-background: new 0 0 462.4 462.4"
+            xml:space="preserve"
+          >
+            <path
+              d="M352,142C352,63.6,298,0,231.2,0S110.4,64,110.4,142.4c0,68.8,42,126.4,97.2,139.6l-14,34.4c-0.8,2-0.4,4,0.4,5.6    c1.2,1.6,2.8,2.8,4.8,2.8H218c-9.2,18-15.6,45.6,6.8,62.8c24.4,18.8-7.6,64.8-8,65.2c-2,2.8-1.2,6.4,1.6,8.4    c1.2,0.8,2.4,1.2,3.6,1.2c2,0,3.6-0.8,4.8-2.4c1.6-2.4,38.8-56,5.2-81.6c-21.2-16-5.6-44.4-0.4-53.2h25.2c2,0,4-1.2,5.2-2.8    s1.2-4,0.4-5.6l-13.2-34C307.2,272.8,352,213.6,352,142z M208,312.4l11.6-28.8c4,0.4,7.6,0.8,11.6,0.8c2,0,3.6,0,5.2,0l12,28H208z     M231.2,272.4c-60,0-108.8-58.4-108.8-130.4c0-71.6,48.8-130,108.8-130S340,70.4,340,142.4C340,214,291.2,272.4,231.2,272.4z"
+            />
+          </svg>
+        </div>
       </div>
 
-      <p
-        id="ScrollingHelpfulMessage"
-        class="is-hidden"
-        data-0="opacity: 1"
-        data-100="opacity: 0;"
-      >
-        <span class="u-inlineBlock is-levitating">Keep scrolling down</span>
-      </p>
+      <div id="YGLF-intro" class="is-hidden">
+        <div
+          class="WelcomeMessage"
+          data-0="z-index: 4; opacity: 1"
+          data-130="opacity: 0;"
+          data-131="z-index: 0;"
+        >
+          <div style="position: absolute; top: 1rem">
+            <blockquote style="color: grey">
+              it's an official notification from NASA...
+            </blockquote>
+            <span style="color: white">
+              Breaking news! We've detected a rare cosmic event scheduled for
+              tomorrow
+            </span>
+          </div>
+          <p class="WelcomeMessage-cell">
+            Important notification from
+            <span class="u-noLineBreak">NASA</span>
+          </p>
+        </div>
 
-      <div id="City" data-900="z-index: 1" data-901="z-index: 0">
-        <img
-          id="Telaviv"
-          src="./assets/images/telaviv-small.png"
-          srcset="
-            ./assets/images/telaviv-medium.png 1000w,
-            ./assets/images/telaviv-large.png  4000w
-          "
-          sizes="100vw"
-          alt="Tel Aviv"
-        />
+        <p
+          id="ScrollingHelpfulMessage"
+          class="is-hidden"
+          data-0="opacity: 1"
+          data-100="opacity: 0;"
+        >
+          <span class="u-inlineBlock is-levitating">Keep scrolling down</span>
+        </p>
+
+        <div id="City" data-900="z-index: 1" data-901="z-index: 0">
+          <img
+            id="Telaviv"
+            src="./assets/images/telaviv-small.png"
+            srcset="
+              ./assets/images/telaviv-medium.png 1000w,
+              ./assets/images/telaviv-large.png  4000w
+            "
+            sizes="100vw"
+            alt="Tel Aviv"
+            style="left: 0"
+          />
+        </div>
       </div>
     </div>
 
-    <script src="assets/js/application-xxx.js"></script>
+    <script src="dist/assets/js/main.js"></script>
+
+    <script type="module">
+      import Typed from "https://cdn.skypack.dev/typed.js";
+
+      const welcomeToScrpttag = document.querySelector(".welcome-to-scrpttag");
+      const challengeTitle = document.querySelector(".challenge-title");
+      const challengeSubtitle = document.querySelector(".challenge-subtitle");
+      const challengePartOf = document.querySelector(".challenge-part-of");
+      const clInput = document.querySelector(".cl-input");
+      const clLoading = document.querySelector(".cl-loading");
+
+      function getRandom(from, to) {
+        return Math.floor(Math.random() * to) + from;
+      }
+
+      clInput.focus();
+
+      const initStrings = [
+        "Downloading the source code",
+        "Installing dependencies",
+        "Gathering the infinity stones",
+        "Catching Pokemons (all of them)",
+        "Watering Groot",
+        "Mining bitcoin",
+        "Redirecting Mario to another castle",
+        "Dealing with insanity",
+        "Permitting everything",
+        "Baking cake...... no, I dont.",
+        "Playing with nyancat",
+        "Assembling Avengers",
+        "Searching for Monster drink",
+        "Collecting all Trophies in PS4's Spider-man",
+        "Making you really impatient",
+        "We are almost there",
+        "Waking up Neo",
+        "Getting over here!",
+        "Answering with silence",
+        "Connecting to NASA satelite",
+        "Ready",
+      ];
+
+      clInput.addEventListener("keydown", function (e) {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+          const text = this.innerText.trim().toLowerCase();
+          if (text !== "cheetah") {
+            new Typed(clLoading, {
+              strings: [
+                `'${text}' is not recognized as an internal or external command, operable program or batch file. ^1000`,
+                "",
+              ],
+              typeSpeed: 20,
+              loop: false,
+              showCursor: false,
+              onBegin() {
+                clLoading.classList.add("error");
+              },
+              onComplete() {
+                clLoading.classList.remove("error");
+                //document.getElementById("app").style.zIndex = 10;
+                //document.getElementById("login").style.display = "none";
+                //window.shootStars();
+              },
+            });
+          } else {
+            this.blur();
+            new Typed(clLoading, {
+              strings: [
+                initStrings
+                  .map(
+                    (item, index, array) =>
+                      `(${index + 1}/${array.length}) ${item}`
+                  )
+                  .join(`^${getRandom(500, 1000)} <br/>`),
+              ],
+              typeSpeed: 20,
+              loop: false,
+              showCursor: false,
+              onComplete() {
+                document.getElementById("app").style.zIndex = 10;
+                document.getElementById("login").style.display = "none";
+                window.shootStars();
+              },
+            });
+          }
+        }
+      });
+    </script>
   </body>
 </html>
 i
